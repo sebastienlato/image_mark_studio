@@ -6,9 +6,15 @@ interface ImagePreviewProps {
   images: ProcessedImage[];
   onImageSelect: (index: number) => void;
   onImageRemove: (imageId: string) => void;
+  showWatermarked?: boolean;
 }
 
-export const ImagePreview = ({ images, onImageSelect, onImageRemove }: ImagePreviewProps) => {
+export const ImagePreview = ({ 
+  images, 
+  onImageSelect, 
+  onImageRemove, 
+  showWatermarked = false 
+}: ImagePreviewProps) => {
   return (
     <div className="bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-700">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -22,7 +28,7 @@ export const ImagePreview = ({ images, onImageSelect, onImageRemove }: ImagePrev
               className="aspect-square rounded-xl overflow-hidden border-2 border-gray-600 group-hover:border-cyan-400 transition-all duration-200 group-hover:shadow-lg"
             >
               <img
-                src={image.watermarkedUrl || image.originalUrl}
+                src={showWatermarked && image.watermarkedUrl ? image.watermarkedUrl : image.originalUrl}
                 alt={image.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
               />
@@ -39,8 +45,8 @@ export const ImagePreview = ({ images, onImageSelect, onImageRemove }: ImagePrev
               <X className="w-4 h-4" />
             </button>
             
-            {/* Status indicator */}
-            {image.watermarkedUrl && (
+            {/* Status indicator - only show if we're displaying watermarked and image has watermark */}
+            {showWatermarked && image.watermarkedUrl && (
               <div className="absolute -top-2 -left-2 bg-emerald-500 rounded-full p-1 shadow-lg">
                 <CheckCircle className="w-4 h-4 text-white" />
               </div>

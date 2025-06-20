@@ -34,6 +34,7 @@ const Index = () => {
   });
   const [isProcessing, setIsProcessing] = useState(false);
   const [processAllTrigger, setProcessAllTrigger] = useState(0);
+  const [showWatermarkedInGallery, setShowWatermarkedInGallery] = useState(false);
 
   const handleImagesUpload = useCallback((files: File[]) => {
     const newImages: ProcessedImage[] = files.map(file => ({
@@ -98,6 +99,7 @@ const Index = () => {
     }
 
     setIsProcessing(true);
+    setShowWatermarkedInGallery(false); // Hide watermarked versions during processing
     toast.success('Processing all images...');
     
     // Trigger processing for all images by incrementing the trigger
@@ -106,6 +108,7 @@ const Index = () => {
     // Wait a bit for all canvases to process
     setTimeout(() => {
       setIsProcessing(false);
+      setShowWatermarkedInGallery(true); // Show watermarked versions after processing
       toast.success('All images processed successfully!');
     }, 3000);
   };
@@ -315,6 +318,7 @@ const Index = () => {
               images={images} 
               onImageSelect={setCurrentImageIndex}
               onImageRemove={handleRemoveImage}
+              showWatermarked={showWatermarkedInGallery}
             />
           </div>
         )}
