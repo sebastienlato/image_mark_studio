@@ -1,23 +1,26 @@
 
 import { ProcessedImage } from '@/pages/Index';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, X } from 'lucide-react';
 
 interface ImagePreviewProps {
   images: ProcessedImage[];
   onImageSelect: (index: number) => void;
+  onImageRemove: (imageId: string) => void;
 }
 
-export const ImagePreview = ({ images, onImageSelect }: ImagePreviewProps) => {
+export const ImagePreview = ({ images, onImageSelect, onImageRemove }: ImagePreviewProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-6 border border-slate-200">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-200 dark:border-slate-700">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {images.map((image, index) => (
           <div
             key={image.id}
-            onClick={() => onImageSelect(index)}
             className="relative group cursor-pointer"
           >
-            <div className="aspect-square rounded-xl overflow-hidden border-2 border-slate-200 group-hover:border-blue-300 transition-all duration-200 group-hover:shadow-lg">
+            <div 
+              onClick={() => onImageSelect(index)}
+              className="aspect-square rounded-xl overflow-hidden border-2 border-slate-200 dark:border-slate-600 group-hover:border-cyan-300 dark:group-hover:border-cyan-400 transition-all duration-200 group-hover:shadow-lg"
+            >
               <img
                 src={image.watermarkedUrl || image.originalUrl}
                 alt={image.name}
@@ -25,15 +28,26 @@ export const ImagePreview = ({ images, onImageSelect }: ImagePreviewProps) => {
               />
             </div>
             
+            {/* Remove button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onImageRemove(image.id);
+              }}
+              className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            
             {/* Status indicator */}
             {image.watermarkedUrl && (
-              <div className="absolute -top-2 -right-2 bg-emerald-500 rounded-full p-1 shadow-lg">
+              <div className="absolute -top-2 -left-2 bg-emerald-500 rounded-full p-1 shadow-lg">
                 <CheckCircle className="w-4 h-4 text-white" />
               </div>
             )}
             
             {/* Filename */}
-            <p className="text-xs text-slate-600 mt-2 truncate text-center">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 truncate text-center">
               {image.name}
             </p>
           </div>
@@ -42,7 +56,7 @@ export const ImagePreview = ({ images, onImageSelect }: ImagePreviewProps) => {
       
       {images.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-slate-500">No images uploaded yet</p>
+          <p className="text-slate-500 dark:text-slate-400">No images uploaded yet</p>
         </div>
       )}
     </div>
