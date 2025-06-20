@@ -59,8 +59,8 @@ export const FileDropzone = ({
       className={cn(
         "relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200 cursor-pointer group",
         isDragOver 
-          ? "border-cyan-500 bg-cyan-50 dark:bg-cyan-950 scale-105" 
-          : "border-slate-300 dark:border-slate-600 hover:border-slate-400 dark:hover:border-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700",
+          ? "border-blue-500 bg-blue-50 scale-105" 
+          : "border-slate-300 hover:border-slate-400 hover:bg-slate-50",
         className
       )}
     >
@@ -76,8 +76,8 @@ export const FileDropzone = ({
         <div className={cn(
           "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200",
           isDragOver 
-            ? "bg-cyan-500 text-white scale-110" 
-            : "bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 group-hover:bg-slate-200 dark:group-hover:bg-slate-600"
+            ? "bg-blue-500 text-white scale-110" 
+            : "bg-slate-100 text-slate-400 group-hover:bg-slate-200"
         )}>
           {multiple ? <Upload className="w-6 h-6" /> : <Image className="w-6 h-6" />}
         </div>
@@ -85,19 +85,19 @@ export const FileDropzone = ({
         <div>
           <p className={cn(
             "font-medium transition-colors",
-            isDragOver ? "text-cyan-600 dark:text-cyan-400" : "text-slate-700 dark:text-slate-300"
+            isDragOver ? "text-blue-600" : "text-slate-700"
           )}>
             {description}
           </p>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             {multiple ? 'PNG, JPG, GIF up to 10MB each' : 'PNG, JPG, GIF up to 10MB'}
           </p>
         </div>
       </div>
       
       {isDragOver && (
-        <div className="absolute inset-0 bg-cyan-500/10 dark:bg-cyan-400/10 rounded-xl border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center">
-          <div className="bg-cyan-500 dark:bg-cyan-400 text-white dark:text-slate-900 px-4 py-2 rounded-lg font-medium">
+        <div className="absolute inset-0 bg-blue-500/10 rounded-xl border-2 border-blue-500 flex items-center justify-center">
+          <div className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium">
             Drop files here
           </div>
         </div>

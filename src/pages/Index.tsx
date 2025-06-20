@@ -5,7 +5,7 @@ import { WatermarkCanvas } from '@/components/WatermarkCanvas';
 import { WatermarkControls } from '@/components/WatermarkControls';
 import { ImagePreview } from '@/components/ImagePreview';
 import { Button } from '@/components/ui/button';
-import { Download, Sparkles, X } from 'lucide-react';
+import { Download, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 
 export interface WatermarkSettings {
@@ -53,37 +53,6 @@ const Index = () => {
     toast.success('Watermark logo uploaded');
   }, []);
 
-  const handleRemoveWatermark = useCallback(() => {
-    if (watermarkImage) {
-      URL.revokeObjectURL(watermarkImage);
-      setWatermarkImage(null);
-      toast.success('Watermark logo removed');
-    }
-  }, [watermarkImage]);
-
-  const handleRemoveImage = useCallback((imageId: string) => {
-    setImages(prev => {
-      const imageToRemove = prev.find(img => img.id === imageId);
-      if (imageToRemove) {
-        URL.revokeObjectURL(imageToRemove.originalUrl);
-        if (imageToRemove.watermarkedUrl) {
-          URL.revokeObjectURL(imageToRemove.watermarkedUrl);
-        }
-      }
-      const newImages = prev.filter(img => img.id !== imageId);
-      
-      // Adjust current index if needed
-      if (currentImageIndex >= newImages.length && newImages.length > 0) {
-        setCurrentImageIndex(newImages.length - 1);
-      } else if (newImages.length === 0) {
-        setCurrentImageIndex(0);
-      }
-      
-      return newImages;
-    });
-    toast.success('Image removed');
-  }, [currentImageIndex]);
-
   const handleWatermarkUpdate = useCallback((url: string, imageId: string) => {
     setImages(prev => prev.map(img => 
       img.id === imageId ? { ...img, watermarkedUrl: url } : img
@@ -130,19 +99,19 @@ const Index = () => {
   const currentImage = images[currentImageIndex];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-teal-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-2xl shadow-lg">
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-2xl shadow-lg">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
               WatermarkPro
             </h1>
           </div>
-          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
             Professional watermarking tool with drag-and-drop functionality, 
             interactive positioning, and batch processing capabilities.
           </p>
@@ -151,8 +120,8 @@ const Index = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Upload Section */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-200 dark:border-slate-700">
-              <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-4">Upload Images</h2>
+            <div className="bg-white rounded-2xl shadow-xl p-6 border border-slate-200">
+              <h2 className="text-xl font-semibold text-slate-800 mb-4">Upload Images</h2>
               <FileDropzone
                 onFilesUpload={handleImagesUpload}
                 accept="image/*"
@@ -161,40 +130,33 @@ const Index = () => {
               />
               
               <div className="mt-6">
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">Images uploaded: {images.length}</p>
+                <p className="text-sm text-slate-600 mb-2">Images uploaded: {images.length}</p>
                 {images.length > 0 && (
                   <div className="flex gap-2 flex-wrap max-h-32 overflow-y-auto">
                     {images.map((img, index) => (
-                      <div key={img.id} className="relative group">
-                        <button
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                            index === currentImageIndex 
-                              ? 'border-cyan-500 shadow-lg scale-105' 
-                              : 'border-slate-200 dark:border-slate-600 hover:border-slate-300 dark:hover:border-slate-500'
-                          }`}
-                        >
-                          <img 
-                            src={img.originalUrl} 
-                            alt={img.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </button>
-                        <button
-                          onClick={() => handleRemoveImage(img.id)}
-                          className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </div>
+                      <button
+                        key={img.id}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                          index === currentImageIndex 
+                            ? 'border-blue-500 shadow-lg scale-105' 
+                            : 'border-slate-200 hover:border-slate-300'
+                        }`}
+                      >
+                        <img 
+                          src={img.originalUrl} 
+                          alt={img.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
                     ))}
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-200 dark:border-slate-700">
-              <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-4">Upload Watermark</h2>
+            <div className="bg-white rounded-2xl shadow-xl p-6 border border-slate-200">
+              <h2 className="text-xl font-semibold text-slate-800 mb-4">Upload Watermark</h2>
               <FileDropzone
                 onFilesUpload={([file]) => handleWatermarkUpload(file)}
                 accept="image/*"
@@ -203,21 +165,13 @@ const Index = () => {
               />
               
               {watermarkImage && (
-                <div className="mt-4 text-center relative group">
-                  <div className="relative inline-block">
-                    <img 
-                      src={watermarkImage} 
-                      alt="Watermark preview"
-                      className="w-16 h-16 object-contain mx-auto rounded-lg border border-slate-200 dark:border-slate-600"
-                    />
-                    <button
-                      onClick={handleRemoveWatermark}
-                      className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">Watermark loaded</p>
+                <div className="mt-4 text-center">
+                  <img 
+                    src={watermarkImage} 
+                    alt="Watermark preview"
+                    className="w-16 h-16 object-contain mx-auto rounded-lg border border-slate-200"
+                  />
+                  <p className="text-sm text-slate-600 mt-2">Watermark loaded</p>
                 </div>
               )}
             </div>
@@ -230,11 +184,11 @@ const Index = () => {
 
           {/* Canvas Section */}
           <div className="lg:col-span-2">
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-200 dark:border-slate-700 mb-6">
+            <div className="bg-white rounded-2xl shadow-xl p-6 border border-slate-200 mb-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">Preview & Edit</h2>
+                <h2 className="text-xl font-semibold text-slate-800">Preview & Edit</h2>
                 {currentImage && (
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
+                  <span className="text-sm text-slate-600">
                     {currentImageIndex + 1} of {images.length}
                   </span>
                 )}
@@ -249,13 +203,13 @@ const Index = () => {
                   onWatermarkUpdate={(url) => handleWatermarkUpdate(url, currentImage.id)}
                 />
               ) : (
-                <div className="h-96 bg-slate-50 dark:bg-slate-700 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
+                <div className="h-96 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-slate-200 dark:bg-slate-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Sparkles className="w-8 h-8 text-slate-400 dark:text-slate-500" />
+                    <div className="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Sparkles className="w-8 h-8 text-slate-400" />
                     </div>
-                    <p className="text-slate-600 dark:text-slate-300 text-lg font-medium">Ready to watermark</p>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+                    <p className="text-slate-600 text-lg font-medium">Ready to watermark</p>
+                    <p className="text-slate-500 text-sm mt-1">
                       Upload images and a watermark to get started
                     </p>
                   </div>
@@ -268,7 +222,7 @@ const Index = () => {
               <Button
                 onClick={processAllImages}
                 disabled={!watermarkImage || images.length === 0 || isProcessing}
-                className="bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-8 py-3 rounded-xl shadow-lg transition-all duration-200 disabled:opacity-50"
+                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-3 rounded-xl shadow-lg transition-all duration-200 disabled:opacity-50"
               >
                 {isProcessing ? 'Processing...' : 'Process All Images'}
               </Button>
@@ -276,7 +230,7 @@ const Index = () => {
               <Button
                 onClick={downloadAll}
                 variant="outline"
-                className="border-teal-500 text-teal-600 hover:bg-teal-50 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950 px-8 py-3 rounded-xl shadow-lg transition-all duration-200"
+                className="border-emerald-500 text-emerald-600 hover:bg-emerald-50 px-8 py-3 rounded-xl shadow-lg transition-all duration-200"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Download All
@@ -288,8 +242,8 @@ const Index = () => {
         {/* Image Preview Grid */}
         {images.length > 0 && (
           <div className="mt-12">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-6">Image Gallery</h2>
-            <ImagePreview images={images} onImageSelect={setCurrentImageIndex} onImageRemove={handleRemoveImage} />
+            <h2 className="text-2xl font-bold text-slate-800 mb-6">Image Gallery</h2>
+            <ImagePreview images={images} onImageSelect={setCurrentImageIndex} />
           </div>
         )}
       </div>
