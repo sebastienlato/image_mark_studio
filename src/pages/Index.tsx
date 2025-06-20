@@ -1,5 +1,4 @@
-
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { FileDropzone } from '@/components/FileDropzone';
 import { WatermarkCanvas } from '@/components/WatermarkCanvas';
 import { WatermarkControls } from '@/components/WatermarkControls';
@@ -34,6 +33,7 @@ const Index = () => {
     position: { x: 0.8, y: 0.8 }
   });
   const [isProcessing, setIsProcessing] = useState(false);
+  const [processAllTrigger, setProcessAllTrigger] = useState(0);
 
   const handleImagesUpload = useCallback((files: File[]) => {
     const newImages: ProcessedImage[] = files.map(file => ({
@@ -98,21 +98,22 @@ const Index = () => {
     }
 
     setIsProcessing(true);
-    
-    // Trigger processing for all images
-    // This will be handled by individual WatermarkCanvas components
     toast.success('Processing all images...');
     
+    // Trigger processing for all images by incrementing the trigger
+    setProcessAllTrigger(prev => prev + 1);
+    
+    // Wait a bit for all canvases to process
     setTimeout(() => {
       setIsProcessing(false);
       toast.success('All images processed successfully!');
-    }, 2000);
+    }, 3000);
   };
 
   const downloadAll = () => {
     const watermarkedImages = images.filter(img => img.watermarkedUrl);
     if (watermarkedImages.length === 0) {
-      toast.error('No processed images to download');
+      toast.error('No processed images to download. Please process images first.');
       return;
     }
 
@@ -121,7 +122,9 @@ const Index = () => {
         const link = document.createElement('a');
         link.href = img.watermarkedUrl;
         link.download = `watermarked_${img.name}`;
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
       }
     });
     
@@ -287,6 +290,22 @@ const Index = () => {
             </div>
           </div>
         </div>
+
+        {/* Hidden canvases for batch processing */}
+        {watermarkImage && (
+          <div className="hidden">
+            {images.map((image) => (
+              <WatermarkCanvas
+                key={`${image.id}-${processAllTrigger}`}
+                imageUrl={image.originalUrl}
+                watermarkUrl={watermarkImage}
+                settings={watermarkSettings}
+                onSettingsChange={() => {}}
+                onWatermarkUpdate={(url) => handleWatermarkUpdate(url, image.id)}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Image Preview Grid */}
         {images.length > 0 && (
