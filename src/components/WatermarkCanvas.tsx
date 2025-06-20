@@ -135,7 +135,7 @@ export const WatermarkCanvas = ({
     <div className="relative">
       <canvas
         ref={canvasRef}
-        className={`w-full h-auto border border-slate-200 rounded-xl shadow-lg ${
+        className={`w-full h-auto border border-gray-600 rounded-xl shadow-lg ${
           isDragging ? 'cursor-grabbing' : 'cursor-grab'
         } transition-all duration-200 hover:shadow-xl`}
         onMouseDown={handleMouseDown}
@@ -145,7 +145,7 @@ export const WatermarkCanvas = ({
       />
       
       {isDragging && (
-        <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+        <div className="absolute top-4 left-4 bg-cyan-500 text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
           Positioning watermark...
         </div>
       )}

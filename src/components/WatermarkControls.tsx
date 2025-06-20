@@ -18,15 +18,15 @@ export const WatermarkControls = ({ settings, onSettingsChange }: WatermarkContr
   };
 
   return (
-    <Card className="p-6 bg-white shadow-xl border border-slate-200">
-      <h2 className="text-xl font-semibold text-slate-800 mb-6">Watermark Settings</h2>
+    <Card className="p-6 bg-gray-800 shadow-xl border border-gray-700">
+      <h2 className="text-xl font-semibold text-gray-100 mb-6">Watermark Settings</h2>
       
       <div className="space-y-6">
         {/* Opacity Control */}
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <Label className="text-sm font-medium text-slate-700">Opacity</Label>
-            <span className="text-sm text-slate-500 font-mono">
+            <Label className="text-sm font-medium text-gray-200">Opacity</Label>
+            <span className="text-sm text-gray-400 font-mono">
               {Math.round(settings.opacity * 100)}%
             </span>
           </div>
@@ -43,8 +43,8 @@ export const WatermarkControls = ({ settings, onSettingsChange }: WatermarkContr
         {/* Scale Control */}
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <Label className="text-sm font-medium text-slate-700">Size</Label>
-            <span className="text-sm text-slate-500 font-mono">
+            <Label className="text-sm font-medium text-gray-200">Size</Label>
+            <span className="text-sm text-gray-400 font-mono">
               {Math.round(settings.scale * 100)}%
             </span>
           </div>
@@ -61,8 +61,8 @@ export const WatermarkControls = ({ settings, onSettingsChange }: WatermarkContr
         {/* Rotation Control */}
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <Label className="text-sm font-medium text-slate-700">Rotation</Label>
-            <span className="text-sm text-slate-500 font-mono">
+            <Label className="text-sm font-medium text-gray-200">Rotation</Label>
+            <span className="text-sm text-gray-400 font-mono">
               {Math.round(settings.rotation)}°
             </span>
           </div>
@@ -78,12 +78,12 @@ export const WatermarkControls = ({ settings, onSettingsChange }: WatermarkContr
 
         {/* Position Controls */}
         <div className="space-y-4">
-          <Label className="text-sm font-medium text-slate-700">Position</Label>
+          <Label className="text-sm font-medium text-gray-200">Position</Label>
           
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs text-slate-600">Horizontal</span>
-              <span className="text-xs text-slate-500 font-mono">
+              <span className="text-xs text-gray-300">Horizontal</span>
+              <span className="text-xs text-gray-400 font-mono">
                 {Math.round(settings.position.x * 100)}%
               </span>
             </div>
@@ -102,8 +102,8 @@ export const WatermarkControls = ({ settings, onSettingsChange }: WatermarkContr
 
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs text-slate-600">Vertical</span>
-              <span className="text-xs text-slate-500 font-mono">
+              <span className="text-xs text-gray-300">Vertical</span>
+              <span className="text-xs text-gray-400 font-mono">
                 {Math.round(settings.position.y * 100)}%
               </span>
             </div>
@@ -123,7 +123,7 @@ export const WatermarkControls = ({ settings, onSettingsChange }: WatermarkContr
 
         {/* Quick Position Presets */}
         <div className="space-y-3">
-          <Label className="text-sm font-medium text-slate-700">Quick Positions</Label>
+          <Label className="text-sm font-medium text-gray-200">Quick Positions</Label>
           <div className="grid grid-cols-3 gap-2">
             {[
               { label: 'TL', pos: { x: 0.05, y: 0.05 } },
@@ -139,7 +139,7 @@ export const WatermarkControls = ({ settings, onSettingsChange }: WatermarkContr
               <button
                 key={label}
                 onClick={() => onSettingsChange({ ...settings, position: pos })}
-                className="p-2 text-xs border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 font-medium text-slate-600"
+                className="p-2 text-xs border border-gray-600 rounded-lg hover:bg-gray-700 hover:border-gray-500 transition-all duration-200 font-medium text-gray-300"
               >
                 {label}
               </button>
