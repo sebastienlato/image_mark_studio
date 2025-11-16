@@ -1,73 +1,48 @@
-# Welcome to your Lovable project
+# Image Mark Studio
 
-## Project info
+Batch watermark photos straight from the browser using the WatermarkPro interface built with Vite, React, shadcn/ui, and Tailwind CSS. Drag in assets, fine-tune the watermark overlay, and export ready-to-share images without leaving the app.
 
-**URL**: https://lovable.dev/projects/c3ef8474-1bde-4033-9c4a-b59ffb4c8e69
+## Features
+- Multi-image uploads with thumbnail tray and quick removal controls.
+- Custom watermark logo upload, opacity/scale/rotation tweaks, and drag-to-position canvas.
+- Batch “Process All” workflow plus one-click download of every processed file.
+- Toast feedback for uploads, processing, and error states thanks to Sonner.
+- Responsive gradient UI themed with Tailwind and shadcn/ui primitives.
 
-## How can I edit this code?
+## Tech Stack
+React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui + Radix, React Query, React Hook Form, Lucide icons.
 
-There are several ways of editing your application.
+## Screenshot
+![WatermarkPro UI](screenshots/screenshot.png)
 
-**Use Lovable**
+## Getting Started
+Prerequisites: Node 18+ and npm.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c3ef8474-1bde-4033-9c4a-b59ffb4c8e69) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+npm install        # install dependencies
+npm run dev        # start Vite dev server on http://localhost:5173
+npm run build      # create production bundle in dist/
+npm run preview    # serve the build locally
+npm run lint       # run ESLint with React Hooks + Refresh rules
 ```
 
-**Edit a file directly in GitHub**
+## Usage
+1. Launch the dev server and open the URL.
+2. Drop or browse photos into the **Upload Images** panel; thumbnails appear immediately.
+3. Drop a PNG/SVG logo into **Upload Watermark**, then refine opacity, scale, rotation, and anchor using Watermark Controls or direct canvas dragging.
+4. Toggle between original and watermarked previews, process every image, and download the generated files (`watermarked_<original>.png`).
+5. Use the gallery tabs to remove unwanted uploads or reset the watermark asset.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Structure
+```
+src/
+  components/        # FileDropzone, WatermarkCanvas, shadcn/ui wrappers
+  pages/             # Index landing page + router views
+  hooks/             # Shared React hooks
+  lib/               # Utility helpers and query logic
+public/              # Static assets and fallback HTML
+screenshots/         # Reference UI captures for docs/PRs
+```
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/c3ef8474-1bde-4033-9c4a-b59ffb4c8e69) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Contributing
+See `AGENTS.md` for contributor expectations (coding standards, testing notes, and PR checklist). Always document manual verification steps in pull requests, attach updated screenshots when UI changes, and ensure `npm run lint` + `npm run build` pass before requesting review.
