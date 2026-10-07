@@ -137,15 +137,15 @@ const Index = () => {
   const currentImage = images[currentImageIndex];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-900">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl shadow-lg">
+            <div className="p-3 bg-linear-to-r from-blue-500 to-cyan-500 rounded-2xl shadow-lg">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               WatermarkPro
             </h1>
           </div>
@@ -277,7 +277,7 @@ const Index = () => {
               <Button
                 onClick={processAllImages}
                 disabled={!watermarkImage || images.length === 0 || isProcessing}
-                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-3 rounded-xl shadow-lg transition-all duration-200 disabled:opacity-50"
+                className="bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-3 rounded-xl shadow-lg transition-all duration-200 disabled:opacity-50"
               >
                 {isProcessing ? 'Processing...' : 'Process All Images'}
               </Button>
